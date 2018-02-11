@@ -1,0 +1,40 @@
+{
+	"name": "Inmos",
+	"version": "0.0.1",
+	"description": "Inventory Monitoring System Android Application",
+	"license": "MIT",
+	"private": true,
+	"author": {
+		"name": "Ibukun O. Dairo",
+		"email": "ibukun.o.dairo@gmail.com"
+	},
+	"scripts": {
+		"start": "node node_modules/react-native/local-cli/cli.js start",
+		"test": "jest"
+	},
+	"dependencies": {
+		"d3-shape": "^1.2.0",
+		"native-base": "^2.3.7",
+		"react": "16.0.0",
+		"react-native": "0.50.1",
+		"react-native-cookies": "^3.2.0",
+		"react-native-svg": "5.5.1",
+		"react-native-svg-charts": "^2.2.2",
+		"react-native-vector-icons": "^4.5.0",
+		"react-navigation": "^1.0.0-beta.27",
+		"react-navigation-redux-helpers": "^1.0.0"
+	},
+	"devDependencies": {
+		"babel-jest": "21.2.0",
+		"babel-preset-react-native": "4.0.0",
+		"jest": "21.2.1",
+		"react-test-renderer": "16.0.0"
+	},
+	"jest": {
+		"preset": "react-native"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/hibeekaey/inmos-app.git"
+	}
+}
