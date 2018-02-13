@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import CookieManager from 'react-native-cookies';
 import {
   Alert,
   AsyncStorage,
@@ -9,6 +10,8 @@ import {
   Button,
   Container,
   Content,
+  Footer,
+  FooterTab,
   Header,
   Icon,
   Left,
@@ -28,10 +31,21 @@ export default class VendorsScreen extends Component {
     }
   }
 
+  signout() {
+    CookieManager.clearAll();
+    AsyncStorage.clear();
+    const resetAction = NavigationActions.reset({
+      index: 0,
+      actions: [NavigationActions.navigate({ routeName: 'Signin' })],
+    });
+    this.props.navigation.dispatch(resetAction);
+  }
+
   componentDidMount() {
     this.setState(previousState => {
       return { isLoading: true };
     });
+
     fetch('https://inmos-api.herokuapp.com/vendor/all', {
       method: 'GET',
       credentials: 'include'
@@ -43,12 +57,11 @@ export default class VendorsScreen extends Component {
             return { data: responseJson.data };
           })
         }
-        this.setState(previousState => {
-          return { isLoading: false };
-        });
       })
       .catch((error) => {
         console.log(error);
+      })
+      .finally(() => {
         this.setState(previousState => {
           return { isLoading: false };
         });
@@ -105,6 +118,13 @@ export default class VendorsScreen extends Component {
             </ListItem>}>
           </List>
         </Content>
+        <Footer>
+          <FooterTab>
+            <Button onPress={() => this.signout()} full>
+              <Text style={styles.text}>Signout</Text>
+            </Button>
+          </FooterTab>
+        </Footer>
       </Container>
     );
   }
