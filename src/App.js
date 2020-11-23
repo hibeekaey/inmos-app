@@ -1,12 +1,12 @@
 import React from 'react';
-import {Text} from 'native-base';
+import {Root, Text} from 'native-base';
 // import RootNavigator from './RootNavigator';
 
 const App = () => (
-  // <Root>
-  //   <RootNavigator />
-  // </Root>
-  <Text>Hello</Text>
+  <Root>
+    <Text>Hello</Text>
+    {/* <RootNavigator /> */}
+  </Root>
 );
 
 export default App;
