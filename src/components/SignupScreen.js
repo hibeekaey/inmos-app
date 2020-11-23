@@ -1,9 +1,5 @@
-import React, { Component } from 'react';
-import {
-  Alert,
-  StyleSheet,
-  View
-} from 'react-native';
+import React, {Component} from 'react';
+import {StyleSheet, View} from 'react-native';
 import {
   Button,
   Container,
@@ -14,42 +10,42 @@ import {
   Input,
   Item,
   Spinner,
-  Text
+  Text,
 } from 'native-base';
-import { StackedFooter } from './shared';
+import {StackedFooter} from './shared';
 
 export default class SignupScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
       showFooter: false,
-      isLoading: false
+      isLoading: false,
     };
   }
 
   _signup(navigate, goBack) {
-    this.setState(previousState => {
-      return { isLoading: true };
+    this.setState((previousState) => {
+      return {isLoading: true};
     });
 
     return fetch('https://inmos-api.herokuapp.com/register', {
       method: 'POST',
       headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         store_name: this.state.storeName,
         password: this.state.password,
         contact: {
           email: [this.state.email],
-          phone: [this.state.phone]
-        }
-      })
+          phone: [this.state.phone],
+        },
+      }),
     })
       .then((response) => response.json())
       .then((responseJson) => {
-        if (responseJson.status == "success") {
+        if (responseJson.status === 'success') {
           goBack();
           return;
         }
@@ -58,24 +54,24 @@ export default class SignupScreen extends Component {
         console.log(error);
       })
       .finally(() => {
-        this.setState(previousState => {
-          return { isLoading: false };
+        this.setState((previousState) => {
+          return {isLoading: false};
         });
       });
   }
-  
+
   componentDidMount() {
     setTimeout(() => {
-      this.setState(previousState => {
-        return { showFooter: true };
+      this.setState((previousState) => {
+        return {showFooter: true};
       });
     }, 500);
   }
 
   render() {
-    const { navigate, goBack } = this.props.navigation;
+    const {navigate, goBack} = this.props.navigation;
 
-    let { showFooter } = this.state;
+    let {showFooter} = this.state;
 
     if (this.state.isLoading) {
       return (
@@ -83,7 +79,7 @@ export default class SignupScreen extends Component {
           <Content contentContainerStyle={styles.contentLoading}>
             <Spinner />
           </Content>
-          <StackedFooter style={[ showFooter && styles.footer ]} />
+          <StackedFooter style={[showFooter && styles.footer]} />
         </Container>
       );
     }
@@ -97,23 +93,49 @@ export default class SignupScreen extends Component {
           </View>
           <Form>
             <Item rounded style={styles.item}>
-              <Input autoCapitalize={'words'} style={styles.input} placeholder="Store" onChangeText={(storeName) => this.setState({storeName})} />
+              <Input
+                autoCapitalize={'words'}
+                style={styles.input}
+                placeholder="Store"
+                onChangeText={(storeName) => this.setState({storeName})}
+              />
             </Item>
             <Item rounded style={styles.item}>
-              <Input autoCapitalize={'none'} keyboardType={'email-address'} style={styles.input} placeholder="Email" onChangeText={(email) => this.setState({email})} />
+              <Input
+                autoCapitalize={'none'}
+                keyboardType={'email-address'}
+                style={styles.input}
+                placeholder="Email"
+                onChangeText={(email) => this.setState({email})}
+              />
             </Item>
             <Item rounded style={styles.item}>
-              <Input keyboardType={'phone-pad'} style={styles.input} placeholder="Phone" onChangeText={(phone) => this.setState({phone})} />
+              <Input
+                keyboardType={'phone-pad'}
+                style={styles.input}
+                placeholder="Phone"
+                onChangeText={(phone) => this.setState({phone})}
+              />
             </Item>
             <Item rounded style={styles.item}>
-              <Input autoCapitalize={'none'} secureTextEntry={true} style={styles.input} placeholder="Password" onChangeText={(password) => this.setState({password})} />
+              <Input
+                autoCapitalize={'none'}
+                secureTextEntry={true}
+                style={styles.input}
+                placeholder="Password"
+                onChangeText={(password) => this.setState({password})}
+              />
             </Item>
           </Form>
-          <Button onPress={() => this._signup(navigate, goBack)} block rounded style={styles.button}>
+          <Button
+            onPress={() => this._signup(navigate, goBack)}
+            block
+            rounded
+            style={styles.button}>
             <Text style={styles.text}>Signup</Text>
           </Button>
         </Content>
-        <StackedFooter style={[ showFooter && styles.footer ]} />
+        <StackedFooter style={[showFooter && styles.footer]} />
       </Container>
     );
   }
@@ -123,32 +145,32 @@ const styles = StyleSheet.create({
   text: {
     fontFamily: 'initial',
     textAlign: 'center',
-    marginVertical: 20
+    marginVertical: 20,
   },
   title: {
     fontSize: 50,
-    lineHeight: 50
+    lineHeight: 50,
   },
   item: {
     marginVertical: 10,
-    backgroundColor: '#ffffff'
+    backgroundColor: '#ffffff',
   },
   input: {
-    textAlign: 'center'
+    textAlign: 'center',
   },
   button: {
-    marginVertical: 50
+    marginVertical: 50,
   },
   content: {
     justifyContent: 'space-between',
-    alignItems: 'stretch'
+    alignItems: 'stretch',
   },
   contentLoading: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   footer: {
-    opacity: 1
-  }
+    opacity: 1,
+  },
 });

@@ -1,11 +1,8 @@
-import React, { Component } from 'react';
+/* eslint-disable react-native/no-inline-styles */
+import React, {Component} from 'react';
 import CookieManager from 'react-native-cookies';
-import { NavigationActions } from 'react-navigation';
-import {
-  Alert,
-  AsyncStorage,
-  StyleSheet
-} from 'react-native';
+import {NavigationActions} from 'react-navigation';
+import {AsyncStorage, StyleSheet} from 'react-native';
 import {
   Body,
   Button,
@@ -22,15 +19,15 @@ import {
   Spinner,
   Text,
   Title,
-  Thumbnail
+  Thumbnail,
 } from 'native-base';
 
 export default class InventoryScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isLoading: false
-    }
+      isLoading: false,
+    };
   }
 
   signout() {
@@ -38,40 +35,40 @@ export default class InventoryScreen extends Component {
     AsyncStorage.clear();
     const resetAction = NavigationActions.reset({
       index: 0,
-      actions: [NavigationActions.navigate({ routeName: 'Signin' })],
+      actions: [NavigationActions.navigate({routeName: 'Signin'})],
     });
     this.props.navigation.dispatch(resetAction);
   }
 
   componentDidMount() {
-    this.setState(previousState => {
-      return { isLoading: true };
-    });
-    
+    // this.setState((previousState) => {
+    //   return {isLoading: true};
+    // });
+
     fetch('https://inmos-api.herokuapp.com/stock/all', {
       method: 'GET',
-      credentials: 'include'
+      credentials: 'include',
     })
       .then((response) => response.json())
       .then((responseJson) => {
-        if (responseJson.status == "success") {
-          this.setState(previousState => {
-            return { data: responseJson.data };
-          })
+        if (responseJson.status === 'success') {
+          this.setState((previousState) => {
+            return {data: responseJson.data};
+          });
         }
       })
       .catch((error) => {
         console.log(error);
       })
       .finally(() => {
-        this.setState(previousState => {
-          return { isLoading: false };
+        this.setState((previousState) => {
+          return {isLoading: false};
         });
       });
   }
 
   render() {
-    const { navigate } = this.props.navigation;
+    const {navigate} = this.props.navigation;
 
     if (this.state.isLoading) {
       return (
@@ -79,10 +76,7 @@ export default class InventoryScreen extends Component {
           <Header>
             <Left>
               <Button transparent onPress={() => navigate('DrawerOpen')}>
-                <Icon
-                  name='md-menu'
-                  style={{ color: '#f0f0f0' }}
-                />
+                <Icon name="md-menu" style={{color: '#f0f0f0'}} />
               </Button>
             </Left>
             <Body>
@@ -102,10 +96,7 @@ export default class InventoryScreen extends Component {
         <Header>
           <Left>
             <Button transparent onPress={() => navigate('DrawerOpen')}>
-              <Icon
-                name='md-menu'
-                style={{ color: '#f0f0f0' }}
-              />
+              <Icon name="md-menu" style={{color: '#f0f0f0'}} />
             </Button>
           </Left>
           <Body>
@@ -114,20 +105,27 @@ export default class InventoryScreen extends Component {
           <Right />
         </Header>
         <Content>
-          <List dataArray={this.state.data} renderRow={(item) =>
-            <ListItem avatar onPress={() => navigate('StockDetail', { stockId: item.stock_id })}>
-              <Left>
-                <Thumbnail source={require('../../assets/img/tag.png')} />
-              </Left>
-              <Body>
-                <Text>{item.stock_name}</Text>
-                <Text note># {item.selling_price}</Text>
-              </Body>
-              <Right>
-                <Text note>{item.quantity} in Stock</Text>
-              </Right>
-            </ListItem>}>
-          </List>
+          <List
+            dataArray={this.state.data}
+            renderRow={(item) => (
+              <ListItem
+                avatar
+                onPress={() =>
+                  navigate('StockDetail', {stockId: item.stock_id})
+                }>
+                <Left>
+                  <Thumbnail source={require('../../assets/img/tag.png')} />
+                </Left>
+                <Body>
+                  <Text>{item.stock_name}</Text>
+                  <Text note># {item.selling_price}</Text>
+                </Body>
+                <Right>
+                  <Text note>{item.quantity} in Stock</Text>
+                </Right>
+              </ListItem>
+            )}
+          />
         </Content>
         <Footer>
           <FooterTab>
@@ -143,11 +141,11 @@ export default class InventoryScreen extends Component {
 
 const styles = StyleSheet.create({
   text: {
-    fontFamily: 'initial'
+    fontFamily: 'initial',
   },
   contentLoading: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center'
-  }
+    alignItems: 'center',
+  },
 });

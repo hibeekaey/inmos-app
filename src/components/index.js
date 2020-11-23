@@ -1,7 +1,7 @@
 import SigninScreen from './SigninScreen';
 import SignupScreen from './SignupScreen';
-import { InventoryScreen, StockDetailScreen } from './inventory';
-import { VendorsScreen, VendorDetailScreen } from './vendors';
+import {InventoryScreen, StockDetailScreen} from './inventory';
+import {VendorsScreen, VendorDetailScreen} from './vendors';
 import AnalyticsScreen from './AnalyticsScreen';
 
 export {
@@ -11,5 +11,5 @@ export {
   StockDetailScreen,
   VendorsScreen,
   VendorDetailScreen,
-  AnalyticsScreen
-}
+  AnalyticsScreen,
+};

@@ -1,13 +1,13 @@
 {
   "name": "inmos",
-	"version": "0.0.1",
-	"description": "Inventory Monitoring System Android Application",
-	"license": "MIT",
-	"private": true,
-	"author": {
-		"name": "Smooth",
-		"email": "smooth@gmail.com"
-	},
+  "version": "0.0.1",
+  "description": "Inventory Monitoring System Android Application",
+  "license": "MIT",
+  "private": true,
+  "author": {
+    "name": "Smooth",
+    "email": "smooth@gmail.com"
+  },
   "scripts": {
     "android": "react-native run-android",
     "ios": "react-native run-ios",
@@ -16,8 +16,18 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@react-native-community/picker": "^1.8.1",
+    "d3-shape": "^2.0.0",
+    "native-base": "^2.13.14",
     "react": "16.13.1",
-    "react-native": "0.63.3"
+    "react-native": "0.63.3",
+    "react-native-cookies": "^3.3.0",
+    "react-native-gesture-handler": "^1.8.0",
+    "react-native-svg": "^12.1.0",
+    "react-native-svg-charts": "^5.4.0",
+    "react-native-vector-icons": "^7.1.0",
+    "react-navigation": "^4.4.3",
+    "react-navigation-redux-helpers": "^4.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",

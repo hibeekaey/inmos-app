@@ -1,7 +1,12 @@
 import React from 'react';
-import { Root } from "native-base";
-import RootNavigator from './RootNavigator';
+import {Text} from 'native-base';
+// import RootNavigator from './RootNavigator';
 
-const App = () => <Root><RootNavigator /></Root>;
+const App = () => (
+  // <Root>
+  //   <RootNavigator />
+  // </Root>
+  <Text>Hello</Text>
+);
 
 export default App;

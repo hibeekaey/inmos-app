@@ -1,10 +1,7 @@
-import React, { Component } from 'react';
+/* eslint-disable react-native/no-inline-styles */
+import React, {Component} from 'react';
 import CookieManager from 'react-native-cookies';
-import {
-  Alert,
-  AsyncStorage,
-  StyleSheet
-} from 'react-native';
+import {AsyncStorage, StyleSheet} from 'react-native';
 import {
   Body,
   Button,
@@ -20,56 +17,56 @@ import {
   Right,
   Spinner,
   Text,
-  Title
+  Title,
 } from 'native-base';
 
 export default class VendorsScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isLoading: false
-    }
+      isLoading: false,
+    };
   }
 
   signout() {
     CookieManager.clearAll();
     AsyncStorage.clear();
-    const resetAction = NavigationActions.reset({
-      index: 0,
-      actions: [NavigationActions.navigate({ routeName: 'Signin' })],
-    });
-    this.props.navigation.dispatch(resetAction);
+    // const resetAction = NavigationActions.reset({
+    //   index: 0,
+    //   actions: [NavigationActions.navigate({routeName: 'Signin'})],
+    // });
+    // this.props.navigation.dispatch(resetAction);
   }
 
   componentDidMount() {
-    this.setState(previousState => {
-      return { isLoading: true };
-    });
+    // this.setState((previousState) => {
+    //   return {isLoading: true};
+    // });
 
     fetch('https://inmos-api.herokuapp.com/vendor/all', {
       method: 'GET',
-      credentials: 'include'
+      credentials: 'include',
     })
       .then((response) => response.json())
       .then((responseJson) => {
-        if (responseJson.status == "success") {
-          this.setState(previousState => {
-            return { data: responseJson.data };
-          })
+        if (responseJson.status === 'success') {
+          this.setState((previousState) => {
+            return {data: responseJson.data};
+          });
         }
       })
       .catch((error) => {
         console.log(error);
       })
       .finally(() => {
-        this.setState(previousState => {
-          return { isLoading: false };
+        this.setState((previousState) => {
+          return {isLoading: false};
         });
       });
   }
 
   render() {
-    const { navigate } = this.props.navigation;
+    const {navigate} = this.props.navigation;
 
     if (this.state.isLoading) {
       return (
@@ -77,10 +74,7 @@ export default class VendorsScreen extends Component {
           <Header>
             <Left>
               <Button transparent onPress={() => navigate('DrawerOpen')}>
-                <Icon
-                  name='md-menu'
-                  style={{ color: '#f0f0f0' }}
-                />
+                <Icon name="md-menu" style={{color: '#f0f0f0'}} />
               </Button>
             </Left>
             <Body>
@@ -100,10 +94,7 @@ export default class VendorsScreen extends Component {
         <Header>
           <Left>
             <Button transparent onPress={() => navigate('DrawerOpen')}>
-              <Icon
-                name='md-menu'
-                style={{ color: '#f0f0f0' }}
-              />
+              <Icon name="md-menu" style={{color: '#f0f0f0'}} />
             </Button>
           </Left>
           <Body>
@@ -112,11 +103,17 @@ export default class VendorsScreen extends Component {
           <Right />
         </Header>
         <Content>
-          <List dataArray={this.state.data} renderRow={(item) =>
-            <ListItem onPress={() => navigate('VendorDetail', { vendorId: item.vendor_id })}>
-              <Text style={styles.text}>{item.vendor_name}</Text>
-            </ListItem>}>
-          </List>
+          <List
+            dataArray={this.state.data}
+            renderRow={(item) => (
+              <ListItem
+                onPress={() =>
+                  navigate('VendorDetail', {vendorId: item.vendor_id})
+                }>
+                <Text style={styles.text}>{item.vendor_name}</Text>
+              </ListItem>
+            )}
+          />
         </Content>
         <Footer>
           <FooterTab>
@@ -132,11 +129,11 @@ export default class VendorsScreen extends Component {
 
 const styles = StyleSheet.create({
   text: {
-    fontFamily: 'initial'
+    fontFamily: 'initial',
   },
   contentLoading: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center'
-  }
+    alignItems: 'center',
+  },
 });

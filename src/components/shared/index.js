@@ -1,5 +1,3 @@
 import StackedFooter from './StackedFooter';
 
-export {
-  StackedFooter
-}
+export {StackedFooter};

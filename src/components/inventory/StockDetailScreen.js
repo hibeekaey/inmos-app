@@ -1,8 +1,6 @@
-import React, { Component } from 'react';
-import {
-  Alert,
-  StyleSheet
-} from 'react-native';
+/* eslint-disable react-native/no-inline-styles */
+import React, {Component} from 'react';
+import {StyleSheet} from 'react-native';
 import {
   Body,
   Button,
@@ -17,48 +15,47 @@ import {
   Spinner,
   Text,
   Title,
-  Thumbnail
 } from 'native-base';
 
 export default class StockDetailScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isLoading: false
-    }
+      isLoading: false,
+    };
   }
 
   componentDidMount() {
-    const { params } = this.props.navigation.state;
+    const {params} = this.props.navigation.state;
 
-    this.setState(previousState => {
-      return { isLoading: true };
-    });
-    
+    // this.setState((previousState) => {
+    //   return {isLoading: true};
+    // });
+
     fetch('https://inmos-api.herokuapp.com/stock/' + params.stockId, {
       method: 'GET',
-      credentials: 'include'
+      credentials: 'include',
     })
       .then((response) => response.json())
       .then((responseJson) => {
-        if (responseJson.status == "success") {
-          this.setState(previousState => {
-            return { data: [responseJson.data] };
-          })
+        if (responseJson.status === 'success') {
+          this.setState((previousState) => {
+            return {data: [responseJson.data]};
+          });
         }
       })
       .catch((error) => {
         console.log(error);
       })
       .finally(() => {
-        this.setState(previousState => {
-          return { isLoading: false };
+        this.setState((previousState) => {
+          return {isLoading: false};
         });
       });
   }
 
   render() {
-    const { navigate, goBack } = this.props.navigation;
+    const {goBack} = this.props.navigation;
 
     if (this.state.isLoading) {
       return (
@@ -66,10 +63,7 @@ export default class StockDetailScreen extends Component {
           <Header>
             <Left>
               <Button transparent onPress={() => goBack()}>
-                <Icon
-                  name='md-arrow-back'
-                  style={{ color: '#f0f0f0' }}
-                />
+                <Icon name="md-arrow-back" style={{color: '#f0f0f0'}} />
               </Button>
             </Left>
             <Body>
@@ -87,58 +81,80 @@ export default class StockDetailScreen extends Component {
     return (
       <Container>
         <Header>
-            <Left>
-              <Button transparent onPress={() => goBack()}>
-                <Icon
-                  name='md-arrow-back'
-                  style={{ color: '#f0f0f0' }}
-                />
-              </Button>
-            </Left>
-            <Body>
-              <Title style={styles.text}>Stock Detail</Title>
-            </Body>
-            <Right />
-          </Header>
-          <Content>
-            <List dataArray={this.state.data} renderRow={(item) =>
+          <Left>
+            <Button transparent onPress={() => goBack()}>
+              <Icon name="md-arrow-back" style={{color: '#f0f0f0'}} />
+            </Button>
+          </Left>
+          <Body>
+            <Title style={styles.text}>Stock Detail</Title>
+          </Body>
+          <Right />
+        </Header>
+        <Content>
+          <List
+            dataArray={this.state.data}
+            renderRow={(item) => (
               <ListItem itemHeader first>
-                <Text style={[styles.text, styles.itemHeader]}>{item.stock_name}</Text>
-              </ListItem>}>
-            </List>
-            <List dataArray={this.state.data} renderRow={(item) =>
+                <Text style={[styles.text, styles.itemHeader]}>
+                  {item.stock_name}
+                </Text>
+              </ListItem>
+            )}
+          />
+          <List
+            dataArray={this.state.data}
+            renderRow={(item) => (
               <ListItem>
                 <Body>
                   <Text>Category</Text>
-                  <Text note style={styles.text}>{item.category}</Text>
+                  <Text note style={styles.text}>
+                    {item.category}
+                  </Text>
                 </Body>
-              </ListItem>}>
-            </List>
-            <List dataArray={this.state.data} renderRow={(item) =>
+              </ListItem>
+            )}
+          />
+          <List
+            dataArray={this.state.data}
+            renderRow={(item) => (
               <ListItem>
                 <Body>
                   <Text>Quantity</Text>
-                  <Text note style={styles.text}>{item.quantity}</Text>
+                  <Text note style={styles.text}>
+                    {item.quantity}
+                  </Text>
                 </Body>
-              </ListItem>}>
-            </List>
-            <List dataArray={this.state.data} renderRow={(item) =>
+              </ListItem>
+            )}
+          />
+          <List
+            dataArray={this.state.data}
+            renderRow={(item) => (
               <ListItem>
                 <Body>
                   <Text>Cost Price</Text>
-                  <Text note style={styles.text}># {item.cost_price}</Text>
+                  <Text note style={styles.text}>
+                    # {item.cost_price}
+                  </Text>
                 </Body>
-              </ListItem>}>
-            </List>
-            <List dataArray={this.state.data} renderRow={(item) =>
+              </ListItem>
+            )}
+          />
+          <List
+            dataArray={this.state.data}
+            renderRow={(item) => (
               <ListItem>
                 <Body>
                   <Text>Selling Price</Text>
-                  <Text note style={styles.text}># {item.selling_price}</Text>
+                  <Text note style={styles.text}>
+                    # {item.selling_price}
+                  </Text>
                 </Body>
-              </ListItem>}>
-            </List>
-          </Content>
+              </ListItem>
+            )}
+          />
+        </Content>
       </Container>
     );
   }
@@ -146,14 +162,14 @@ export default class StockDetailScreen extends Component {
 
 const styles = StyleSheet.create({
   text: {
-    fontFamily: 'initial'
+    fontFamily: 'initial',
   },
   contentLoading: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   itemHeader: {
-    fontSize: 25
-  }
+    fontSize: 25,
+  },
 });
