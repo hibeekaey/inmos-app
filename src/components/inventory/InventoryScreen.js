@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import CookieManager from 'react-native-cookies';
 import { NavigationActions } from 'react-navigation';
 import {
   Alert,
@@ -46,6 +47,7 @@ export default class InventoryScreen extends Component {
     this.setState(previousState => {
       return { isLoading: true };
     });
+    
     fetch('https://inmos-api.herokuapp.com/stock/all', {
       method: 'GET',
       credentials: 'include'
@@ -57,12 +59,11 @@ export default class InventoryScreen extends Component {
             return { data: responseJson.data };
           })
         }
-        this.setState(previousState => {
-          return { isLoading: false };
-        });
       })
       .catch((error) => {
         console.log(error);
+      })
+      .finally(() => {
         this.setState(previousState => {
           return { isLoading: false };
         });

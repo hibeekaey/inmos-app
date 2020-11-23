@@ -39,11 +39,11 @@ export default class SignupScreen extends Component {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        store_name: "Inmos USA Ltd.",
-        password: "TaYo4942++",
+        store_name: this.state.storeName,
+        password: this.state.password,
         contact: {
-          email: ["hibeekaey@yahoo.com"],
-          phone: ["08158486068", "08107320870"]
+          email: [this.state.email],
+          phone: [this.state.phone]
         }
       })
     })
@@ -53,12 +53,11 @@ export default class SignupScreen extends Component {
           goBack();
           return;
         }
-        this.setState(previousState => {
-          return { isLoading: false };
-        });
       })
       .catch((error) => {
         console.log(error);
+      })
+      .finally(() => {
         this.setState(previousState => {
           return { isLoading: false };
         });
@@ -98,19 +97,16 @@ export default class SignupScreen extends Component {
           </View>
           <Form>
             <Item rounded style={styles.item}>
-              <Input style={styles.input} placeholder="Store" />
+              <Input autoCapitalize={'words'} style={styles.input} placeholder="Store" onChangeText={(storeName) => this.setState({storeName})} />
             </Item>
             <Item rounded style={styles.item}>
-              <Input style={styles.input} placeholder="Email" />
+              <Input autoCapitalize={'none'} keyboardType={'email-address'} style={styles.input} placeholder="Email" onChangeText={(email) => this.setState({email})} />
             </Item>
             <Item rounded style={styles.item}>
-              <Input style={styles.input} placeholder="Phone" />
+              <Input keyboardType={'phone-pad'} style={styles.input} placeholder="Phone" onChangeText={(phone) => this.setState({phone})} />
             </Item>
             <Item rounded style={styles.item}>
-              <Input style={styles.input} placeholder="Password" />
-            </Item>
-            <Item rounded style={styles.item}>
-              <Input style={styles.input} placeholder="Confirm Password" />
+              <Input autoCapitalize={'none'} secureTextEntry={true} style={styles.input} placeholder="Password" onChangeText={(password) => this.setState({password})} />
             </Item>
           </Form>
           <Button onPress={() => this._signup(navigate, goBack)} block rounded style={styles.button}>

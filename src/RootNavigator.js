@@ -29,7 +29,7 @@ const MainNavigator = DrawerNavigator({
         />
       )
     }
-  }/*,
+  },
   Analytics: {
     screen: AnalyticsScreen,
     navigationOptions: {
@@ -42,7 +42,7 @@ const MainNavigator = DrawerNavigator({
         />
       )
     }
-  }*/
+  }
 });
 
 const RootNavigator = StackNavigator({

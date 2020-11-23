@@ -34,6 +34,7 @@ export default class StockDetailScreen extends Component {
     this.setState(previousState => {
       return { isLoading: true };
     });
+    
     fetch('https://inmos-api.herokuapp.com/stock/' + params.stockId, {
       method: 'GET',
       credentials: 'include'
@@ -42,15 +43,14 @@ export default class StockDetailScreen extends Component {
       .then((responseJson) => {
         if (responseJson.status == "success") {
           this.setState(previousState => {
-            return { data: responseJson.data };
+            return { data: [responseJson.data] };
           })
         }
-        this.setState(previousState => {
-          return { data: previousState.data, isLoading: false };
-        });
       })
       .catch((error) => {
         console.log(error);
+      })
+      .finally(() => {
         this.setState(previousState => {
           return { isLoading: false };
         });
@@ -103,7 +103,7 @@ export default class StockDetailScreen extends Component {
           <Content>
             <List dataArray={this.state.data} renderRow={(item) =>
               <ListItem itemHeader first>
-                <Text style={styles.text}>{item.stock_name}</Text>
+                <Text style={[styles.text, styles.itemHeader]}>{item.stock_name}</Text>
               </ListItem>}>
             </List>
             <List dataArray={this.state.data} renderRow={(item) =>
@@ -126,7 +126,7 @@ export default class StockDetailScreen extends Component {
               <ListItem>
                 <Body>
                   <Text>Cost Price</Text>
-                  <Text note style={styles.text}>{item.cost_price}</Text>
+                  <Text note style={styles.text}># {item.cost_price}</Text>
                 </Body>
               </ListItem>}>
             </List>
@@ -134,7 +134,7 @@ export default class StockDetailScreen extends Component {
               <ListItem>
                 <Body>
                   <Text>Selling Price</Text>
-                  <Text note style={styles.text}>{item.selling_price}</Text>
+                  <Text note style={styles.text}># {item.selling_price}</Text>
                 </Body>
               </ListItem>}>
             </List>
@@ -152,5 +152,8 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center'
+  },
+  itemHeader: {
+    fontSize: 25
   }
 });

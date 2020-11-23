@@ -34,6 +34,7 @@ export default class VendorDetailScreen extends Component {
     this.setState(previousState => {
       return { isLoading: true };
     });
+    
     fetch('https://inmos-api.herokuapp.com/vendor/' + params.vendorId, {
       method: 'GET',
       credentials: 'include'
@@ -42,15 +43,14 @@ export default class VendorDetailScreen extends Component {
       .then((responseJson) => {
         if (responseJson.status == "success") {
           this.setState(previousState => {
-            return { data: responseJson.data };
+            return { data: [responseJson.data] };
           })
         }
-        this.setState(previousState => {
-          return { data: previousState.data, isLoading: false };
-        });
       })
       .catch((error) => {
         console.log(error);
+      })
+      .finally(() => {
         this.setState(previousState => {
           return { isLoading: false };
         });
@@ -103,7 +103,7 @@ export default class VendorDetailScreen extends Component {
           <Content>
             <List dataArray={this.state.data} renderRow={(item) =>
               <ListItem itemHeader first>
-                <Text style={styles.text}>{item.vendor_name}</Text>
+                <Text style={[styles.text, styles.itemHeader]}>{item.vendor_name}</Text>
               </ListItem>}>
             </List>
             <List dataArray={this.state.data} renderRow={(item) =>
@@ -136,5 +136,8 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center'
+  },
+  itemHeader: {
+    fontSize: 25
   }
 });

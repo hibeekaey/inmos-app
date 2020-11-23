@@ -34,6 +34,7 @@ export default class SigninScreen extends Component {
     this.setState(previousState => {
       return { isLoading: true };
     });
+    
     return fetch('https://inmos-api.herokuapp.com/auth/login', {
       method: 'POST',
       credentials: 'include',
@@ -42,8 +43,8 @@ export default class SigninScreen extends Component {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        store_id: "fb271289-f7e4-4263-bfd3-f47effea8d53",
-	      password: "TaYo4942++"
+        store_id: this.state.storeId,
+	      password: this.state.password
       })
     })
       .then((response) => response.json())
@@ -57,12 +58,11 @@ export default class SigninScreen extends Component {
             return;
           });
         }
-        this.setState(previousState => {
-          return { isLoading: false };
-        });
       })
       .catch((error) => {
         console.log(error);
+      })
+      .finally(() => {
         this.setState(previousState => {
           return { isLoading: false };
         });
@@ -70,12 +70,17 @@ export default class SigninScreen extends Component {
   }
 
   componentDidMount() {
-    // clear cookies
-      /*CookieManager.clearAll();*/
     this.setState(previousState => {
       return { isLoading: true };
     });
+
     AsyncStorage.getItem('InmosUser', (err, result) => {
+      if (!result) {
+        return this.setState(previousState => {
+          return { isLoading: false };
+        });
+      }
+
       this.setState(previousState => {
         return { user: result };
       });
@@ -120,10 +125,10 @@ export default class SigninScreen extends Component {
           </View>
           <Form>
             <Item rounded style={styles.item}>
-              <Input style={styles.input} placeholder="StoreID" />
+              <Input autoCapitalize={'none'} style={styles.input} placeholder="StoreID" onChangeText={(storeId) => this.setState({storeId})} />
             </Item>
             <Item rounded style={styles.item}>
-              <Input style={styles.input} placeholder="Password" />
+              <Input autoCapitalize={'none'} secureTextEntry={true} style={styles.input} placeholder="Password" onChangeText={(password) => this.setState({password})} />
             </Item>
           </Form>
           <View>
