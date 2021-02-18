@@ -1,13 +1,9 @@
 {
-	"name": "Inmos",
+	"name": "inmos",
 	"version": "0.0.1",
 	"description": "Inventory Monitoring System Android Application",
 	"license": "MIT",
 	"private": true,
-	"author": {
-		"name": "Ibukun O. Dairo",
-		"email": "ibukun.o.dairo@gmail.com"
-	},
 	"scripts": {
 		"start": "node node_modules/react-native/local-cli/cli.js start",
 		"test": "jest"
